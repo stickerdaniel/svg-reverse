@@ -9,4 +9,7 @@ A web tool for reversing specific paths in SVG files. Perfect for creating svg a
 - View and copy the modified SVG instantly
 - No manual coordinate editing required
 
-<img width="1038" alt="SVG Path Reverser Interface" src="https://github.com/user-attachments/assets/3375c650-8d09-405b-bb96-fbce963f15ad">
+<video width="100%" controls>
+  <source src="https://github.com/stickerdaniel/svg-reverse/raw/main/svg_reverse.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
