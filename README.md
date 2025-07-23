@@ -6,6 +6,7 @@ A web tool for reversing specific paths in SVG files. Perfect for creating svg a
 
 https://github.com/user-attachments/assets/7fda0d8d-9d4d-44ba-a1c3-71fbe11fd822
 
+### Features
 - Paste SVG code and select which paths to reverse
 - Preserves all original attributes, classes, and comments
 - Set individual easing, duration, and delay for each path.
