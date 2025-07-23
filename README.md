@@ -4,11 +4,10 @@ A web tool for reversing specific paths in SVG files. Perfect for creating svg a
 
 **[Visit Website](https://svg-reverse.daniel.sticker.name/)**
 
-- Paste SVG code and select which paths to reverse
-- Preserves all original attributes, classes, and comments  
-- View and copy the modified SVG instantly
-- No manual coordinate editing required
-
 https://github.com/user-attachments/assets/7fda0d8d-9d4d-44ba-a1c3-71fbe11fd822
 
-
+- Paste SVG code and select which paths to reverse
+- Preserves all original attributes, classes, and comments
+- Set individual easing, duration, and delay for each path.
+- View and copy the modified SVG
+- No manual coordinate editing required
