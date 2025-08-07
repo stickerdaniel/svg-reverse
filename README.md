@@ -2,12 +2,9 @@
 
 A web tool for reversing specific paths in SVG files. Perfect for creating svg animations with the [stroke-dashoffset](https://css-tricks.com/almanac/properties/s/stroke-dashoffset/) technique, where you need control over the drawing direction.
 
-**[Visit Website](https://svg-reverse.daniel.sticker.name/)**
+**[Try this tool!](https://svg-reverse.daniel.sticker.name/)**
 
-
-![svg-reverse](https://github.com/user-attachments/assets/d708e4fe-e6e1-4b8e-bec8-3d53f583867c)
-
-
+<img src="https://cdn.inframs.de/private/daniel/svg-reverse/svg_reverse.gif">
 
 ### Features
 - Paste SVG code and select which paths to reverse
