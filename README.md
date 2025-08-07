@@ -4,7 +4,7 @@ A web tool for reversing specific paths in SVG files. Perfect for creating svg a
 
 **[Try this tool!](https://svg-reverse.daniel.sticker.name/)**
 
-![SVG Reverse Demo](svg_reverse.gif)
+![SVG Reverse Demo](demo/svg_reverse.gif)
 
 ### Features
 - Paste SVG code and select which paths to reverse
