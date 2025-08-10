@@ -15,4 +15,10 @@ __pycache__/
 # venv
 .venv/
 
+# Node modules
+node_modules/
+
+# MyPy cache
+.mypy_cache/
+
 *.local*
