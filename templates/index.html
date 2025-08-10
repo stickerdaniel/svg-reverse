@@ -135,7 +135,7 @@
     <h1 class="text-3xl md:text-4xl font-extrabold my-4 md:my-6">
         SVG Path Reverser
     </h1>
-    <p class="text-base md:text-lg mb-4 md:mb-6 text-gray-500 px-2 md:px-0">
+    <p class="text-base md:text-lg mb-4 md:mb-6 text-gray-500">
         This tool allows you to reverse specific paths in your SVG.
         Paste your SVG code, toggle the paths, and get the updated SVG with reversed paths.
         <br>
@@ -149,7 +149,7 @@
     <div class="svg-editor-container container-outline">
         <div class="svg-editor" id="input-editor"></div>
     </div>
-    <div class="flex flex-col sm:flex-row mt-3 mb-6 gap-3 px-2 md:px-0">
+    <div class="flex flex-col sm:flex-row mt-3 mb-6 gap-3">
         <button id="parse-btn" class="btn btn-primary rounded-full w-full sm:w-auto">
             <!-- Parse Icon -->
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wand-sparkles-icon lucide-wand-sparkles">
@@ -180,7 +180,7 @@
     </div>
 
     <!-- Paths List and SVG Rendering -->
-    <div id="settings" class="flex flex-col lg:flex-row mt-12 gap-4 px-2 md:px-0" style="display: none;">
+    <div id="settings" class="flex flex-col lg:flex-row mt-12 gap-4" style="display: none;">
         <div class="flex flex-col mb-6">
             <!-- Paths List -->
             <h2 class="text-2xl font-semibold mb-2">Paths</h2>
@@ -213,7 +213,7 @@
 
     <!-- Updated SVG Code -->
     <div id="updated-svg-container" style="display: none;">
-        <div class="flex flex-row justify-center sm:justify-end mb-3 mt-6 gap-3 px-2 md:px-0">
+        <div class="flex flex-row justify-center sm:justify-end mb-3 mt-6 gap-3">
             <!-- Download Animation script -->
             <button id="download-btn" class="btn btn-secondary rounded-full flex-1 sm:flex-none sm:w-auto">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download-icon lucide-download">
