@@ -148,16 +148,17 @@ $('#parse-btn').on('click', function () {
 
                 // Append the path item with the new selects
                 $('#path-list').append(`
-                    <div class="path-item flex flex-row items-center gap-2 py-2 border-b border-base-300">
-                        ${checkbox}
-                        ${statusBadge}
-                        <div class="flex items-center gap-2 min-w-0">
-                            ${pathIdBadge}
-                            ${pathClassBadge}
-                            ${startBadge}
-                        </div>
-                        <div class="flex-grow"></div>
+                    <div class="path-item flex flex-col sm:flex-row gap-2 py-2 border-b border-base-300">
                         <div class="flex items-center gap-2">
+                            ${checkbox}
+                            ${statusBadge}
+                            <div class="flex items-center gap-2 min-w-0">
+                                ${pathIdBadge}
+                                ${pathClassBadge}
+                                ${startBadge}
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 sm:ml-auto">
                             ${animationDurationInput}
                             ${animationDelayInput}
                             ${easingFunctionSelect}
