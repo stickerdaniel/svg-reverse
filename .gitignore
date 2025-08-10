@@ -8,3 +8,9 @@
 
 # Ignore .vercel folder
 .vercel/
+
+# pycache
+__pycache__/
+
+# venv
+.venv/

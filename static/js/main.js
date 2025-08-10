@@ -74,19 +74,19 @@ $('#parse-btn').on('click', function () {
             showResultUI(true);
 
             data.forEach(function (path, index) {
-                const checkbox = `<input type="checkbox" id="path${index}" value="${index}" class="checkbox" checked>`;
-                const statusBadge = `<span id="status${index}" class="badge badge-success m-1">reversed</span>`;
+                const checkbox = `<input type="checkbox" id="path${index}" value="${index}" class="checkbox checkbox-lg" checked>`;
+                const statusBadge = `<span id="status${index}" class="badge badge-success badge-lg w-24 text-center m-1">reversed</span>`;
                 let pathIdBadge = '';
                 let pathClassBadge = '';
                 // Get duration and delay from path
                 let durationValue = path.duration || '';
                 let delayValue = path.delay || '';
-                const animationDurationInput = `<div class="tooltip" data-tip="duration"><input type="text" value="${durationValue}" placeholder="2" class="input-duration input input-bordered input-accent input-xs w-10 text-center m-1" /></div>`;
-                const animationDelayInput = `<div class="tooltip" data-tip="delay"><input type="text" value="${delayValue}" placeholder="0" class="input-delay input input-bordered input-accent input-xs w-10 text-center m-1" /></div>`;
+                const animationDurationInput = `<div class="tooltip" data-tip="duration"><input type="text" value="${durationValue}" placeholder="2" class="input-duration input input-bordered input-accent input-sm md:input-xs w-20 text-center" /></div>`;
+                const animationDelayInput = `<div class="tooltip" data-tip="delay"><input type="text" value="${delayValue}" placeholder="0" class="input-delay input input-bordered input-accent input-sm md:input-xs w-20 text-center" /></div>`;
 
                 // id badge
                 if (path.id) {
-                    pathIdBadge = `<span class="badge badge-secondary mx-1">#${path.id}</span>`;
+                    pathIdBadge = `<span class="badge badge-secondary badge-lg">#${path.id}</span>`;
                 }
                 // class badge
                 if (path.class) {
@@ -95,12 +95,23 @@ $('#parse-btn').on('click', function () {
                         return !cls.startsWith('duration-') && !cls.startsWith('delay-') && cls !== 'animate';
                     }).join(' ');
                     if (filteredClasses) {
-                        pathClassBadge = `<span class="badge badge-primary mx-1 whitespace-nowrap">${filteredClasses}</span>`;
+                        pathClassBadge = `<span class="badge badge-primary badge-lg ml-1 whitespace-nowrap">${filteredClasses}</span>`;
                     }
                 }
-                // start value badge
-                let startValue = path.start ? `${path.start}` : 'N/A';
-                const startBadge = `<span class="badge badge-info mx-2 text-nowrap">${startValue}...</span>`;
+                // start value badge - format coordinates with 2 decimal places
+                let startValue = 'N/A';
+                if (path.start) {
+                    // Parse the coordinates and format with 2 decimal places
+                    const coords = path.start.match(/[\d.]+/g);
+                    if (coords && coords.length >= 2) {
+                        const x = parseFloat(coords[0]).toFixed(2);
+                        const y = parseFloat(coords[1]).toFixed(2);
+                        startValue = `(${x}, ${y})`;
+                    } else {
+                        startValue = path.start;
+                    }
+                }
+                const startBadge = `<span class="badge badge-info badge-lg ml-1 text-nowrap">${startValue}...</span>`;
 
                 // Get easing from path
                 let easingValue = path.easing || '';
@@ -129,24 +140,26 @@ $('#parse-btn').on('click', function () {
                     }).join('');
                 }
 
-                const easingFunctionSelect = `<div class="tooltip" data-tip="easing function"><select class="select-easing-function select select-accent select-xs m-1">
+                const easingFunctionSelect = `<div class="tooltip" data-tip="easing function"><select class="select-easing-function select select-accent select-sm md:select-xs">
                 ${createEasingFunctionOptions(easingFunction)}
                 </select></div>`;
 
-                const easingTypeSelect = `<div class="tooltip" data-tip="easing type"><select class="select-easing-type select select-accent select-xs m-1">
+                const easingTypeSelect = `<div class="tooltip" data-tip="easing type"><select class="select-easing-type select select-accent select-sm md:select-xs">
                 ${createEasingTypeOptions(easingType)}
                 </select></div>`;
 
                 // Append the path item with the new selects
                 $('#path-list').append(`
-                    <div class="path-item flex items-center">
+                    <div class="path-item flex flex-row items-center gap-2 py-3 border-b border-base-300">
                         ${checkbox}
                         ${statusBadge}
-                        <div class="flex items-center ml-4 w-full">
+                        <div class="flex items-center gap-2 min-w-0">
                             ${pathIdBadge}
                             ${pathClassBadge}
                             ${startBadge}
-                            <div class="grow"></div>
+                        </div>
+                        <div class="flex-grow"></div>
+                        <div class="flex items-center gap-2">
                             ${animationDurationInput}
                             ${animationDelayInput}
                             ${easingFunctionSelect}

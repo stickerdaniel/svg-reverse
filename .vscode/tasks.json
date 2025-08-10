@@ -4,12 +4,9 @@
     {
       "label": "Run Flask Dev Server",
       "type": "shell",
-      "command": "flask run --debug",
+      "command": "source .venv/bin/activate && flask --app main run --debug",
       "options": {
-        "env": {
-          "FLASK_APP": "main.py",
-          "FLASK_ENV": "development"
-        }
+        "cwd": "${workspaceFolder}"
       },
       "problemMatcher": [],
       "group": {
