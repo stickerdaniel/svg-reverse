@@ -98,20 +98,18 @@ $('#parse-btn').on('click', function () {
                         pathClassBadge = `<span class="badge badge-primary badge-lg ml-1 whitespace-nowrap">${filteredClasses}</span>`;
                     }
                 }
-                // start value badge - format coordinates with 2 decimal places
-                let startValue = 'N/A';
-                if (path.start) {
+                // start value badge - only show for paths without an ID
+                let startBadge = '';
+                if (!path.id && path.start) {
                     // Parse the coordinates and format with 2 decimal places
                     const coords = path.start.match(/[\d.]+/g);
                     if (coords && coords.length >= 2) {
                         const x = parseFloat(coords[0]).toFixed(2);
                         const y = parseFloat(coords[1]).toFixed(2);
-                        startValue = `(${x}, ${y})`;
-                    } else {
-                        startValue = path.start;
+                        const startValue = `(${x}, ${y})`;
+                        startBadge = `<span class="badge badge-info badge-lg ml-1 text-nowrap">${startValue}...</span>`;
                     }
                 }
-                const startBadge = `<span class="badge badge-info badge-lg ml-1 text-nowrap">${startValue}...</span>`;
 
                 // Get easing from path
                 let easingValue = path.easing || '';
@@ -513,8 +511,8 @@ function showSwal(title, text, success) {
         customClass: {
             confirmButton: 'btn btn-primary px-6 rounded-full', // Apply DaisyUI button styles
             popup: 'rounded-box bg-base-100 shadow-lg',
-            title: 'text-gray-500',
-            htmlContainer: 'text-gray-500',
+            title: 'text-base-content',
+            htmlContainer: 'text-base-content',
         },
     });
 }
