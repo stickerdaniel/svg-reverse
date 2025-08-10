@@ -148,7 +148,7 @@ $('#parse-btn').on('click', function () {
 
                 // Append the path item with the new selects
                 $('#path-list').append(`
-                    <div class="path-item flex flex-row items-center gap-2 py-3 border-b border-base-300">
+                    <div class="path-item flex flex-row items-center gap-2 py-2 border-b border-base-300">
                         ${checkbox}
                         ${statusBadge}
                         <div class="flex items-center gap-2 min-w-0">
