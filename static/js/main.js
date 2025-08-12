@@ -158,7 +158,7 @@ $('#parse-btn').on('click', function () {
                                 ${startBadge}
                             </div>
                         </div>
-                        <div class="flex items-center gap-2 sm:ml-auto">
+                        <div class="flex items-center gap-1 sm:ml-auto">
                             ${animationDurationInput}
                             ${animationDelayInput}
                             ${easingFunctionSelect}
