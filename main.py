@@ -46,7 +46,7 @@ def track_server_event(event_name, event_data=None):
 
 # Function to extract paths from SVG
 def extract_paths(svg_content):
-    parser = et.XMLParser(recover=True)
+    parser = et.XMLParser(recover=True, resolve_entities=False, no_network=True)
     # If the content does not start with '<svg', wrap it in an <svg> tag
     if not svg_content.strip().startswith('<svg'):
         svg_content = f'<svg xmlns="http://www.w3.org/2000/svg">{svg_content}</svg>'
@@ -159,7 +159,7 @@ def reverse_paths():
                                                'easing': item.get('easing')} for item in path_data}
 
         # Parse the SVG content
-        parser = et.XMLParser(recover=True)
+        parser = et.XMLParser(recover=True, resolve_entities=False, no_network=True)
         # If the content does not start with '<svg', wrap it in an <svg> tag
         if not svg_content.strip().startswith('<svg'):
             svg_content = f'<svg xmlns="http://www.w3.org/2000/svg">{svg_content}</svg>'
