@@ -1,4 +1,5 @@
 @import "tailwindcss" source(none);
+@import "sweetalert2/dist/sweetalert2.css" layer(components);
 @source "../index.html";
 @source "./main.js";
 

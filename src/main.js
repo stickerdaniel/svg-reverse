@@ -3,24 +3,29 @@ import ace from 'ace-builds';
 import 'ace-builds/src-noconflict/mode-svg';
 import 'ace-builds/src-noconflict/theme-dracula';
 import 'ace-builds/src-noconflict/ext-searchbox';
+import 'ace-builds/src-noconflict/ext-prompt';
+import 'ace-builds/src-noconflict/ext-settings_menu';
 import xmlWorkerUrl from 'ace-builds/src-min-noconflict/worker-xml.js?url';
 import { gsap } from 'gsap';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2/dist/sweetalert2.esm.js';
 import './styles.css';
 import { buildZip, extractPaths, reversePaths } from './svg.js';
 
 ace.config.setModuleUrl('ace/mode/xml_worker', xmlWorkerUrl);
 
 // Keep the standalone animation script identical to the copy in downloads.
-// Load it as a classic script after GSAP, before enabling the animation buttons.
+// Only animation controls wait for it; editing still works if loading fails.
 window.gsap = gsap;
-await new Promise((resolve, reject) => {
-    const script = document.createElement('script');
-    script.src = '/static/js/anim.mjs';
-    script.onload = resolve;
-    script.onerror = () => reject(new Error('Could not load the animation script'));
-    document.head.append(script);
-});
+const animationButtons = $('#animate-original, #animate-edited').prop('disabled', true);
+const animationScript = document.createElement('script');
+animationScript.src = '/static/js/anim.mjs';
+animationScript.onload = () => {
+    animationButtons.prop('disabled', typeof window.animateSVGPaths !== 'function');
+};
+animationScript.onerror = () => {
+    animationButtons.attr('title', 'Animation preview is unavailable. Reload to try again.');
+};
+document.head.append(animationScript);
 
 // Default SVG for the input editor, empty if it cannot be loaded
 const defaultSvg = await fetch('/static/svg/hello.svg')
