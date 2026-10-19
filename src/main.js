@@ -1,4 +1,42 @@
+import $ from 'jquery';
+import ace from 'ace-builds';
+import 'ace-builds/src-noconflict/mode-svg';
+import 'ace-builds/src-noconflict/theme-dracula';
+import 'ace-builds/src-noconflict/ext-searchbox';
+import 'ace-builds/src-noconflict/ext-prompt';
+import 'ace-builds/src-noconflict/ext-settings_menu';
+import { gsap } from 'gsap';
+import Swal from 'sweetalert2/dist/sweetalert2.esm.js';
+import './styles.css';
 import { buildZip, extractPaths, reversePaths } from './svg.js';
+
+// Settings loads themes, modes and keybindings on demand. Keep those choices
+// and their workers available locally instead of relying on Ace's former CDN.
+const aceAssets = import.meta.glob('../node_modules/ace-builds/src-min-noconflict/{theme,mode,keybinding,worker}-*.js', {
+    eager: true,
+    query: '?url&no-inline',
+    import: 'default',
+});
+for (const [file, url] of Object.entries(aceAssets)) {
+    const [, type, name] = file.match(/\/(theme|mode|keybinding|worker)-(.+)\.js$/);
+    const module = type === 'worker' ? `ace/mode/${name}_worker`
+        : `ace/${type === 'keybinding' ? 'keyboard' : type}/${name}`;
+    ace.config.setModuleUrl(module, url);
+}
+
+// Keep the standalone animation script identical to the copy in downloads.
+// Only animation controls wait for it; editing still works if loading fails.
+window.gsap = gsap;
+const animationButtons = $('#animate-original, #animate-edited').prop('disabled', true);
+const animationScript = document.createElement('script');
+animationScript.src = '/static/js/anim.mjs';
+animationScript.onload = () => {
+    animationButtons.prop('disabled', typeof window.animateSVGPaths !== 'function');
+};
+animationScript.onerror = () => {
+    animationButtons.attr('title', 'Animation preview is unavailable. Reload to try again.');
+};
+document.head.append(animationScript);
 
 // Default SVG for the input editor, empty if it cannot be loaded
 const defaultSvg = await fetch('/static/svg/hello.svg')
@@ -7,7 +45,7 @@ const defaultSvg = await fetch('/static/svg/hello.svg')
 
 // Initialize Ace Editor for the input
 let editor = ace.edit("input-editor");
-editor.setTheme("ace/theme/dracula"); // Light theme
+editor.setTheme("ace/theme/dracula");
 editor.session.setMode("ace/mode/svg");
 editor.setValue(defaultSvg, -1); // Set initial content
 editor.renderer.setShowPrintMargin(false); // Remove the gray line
@@ -92,15 +130,15 @@ $('#parse-btn').on('click', function () {
     showResultUI(true);
 
     data.forEach(function (path, index) {
-        const checkbox = `<input type="checkbox" id="path${index}" value="${index}" class="checkbox checkbox-lg" checked>`;
+        const checkbox = `<input type="checkbox" id="path${index}" value="${index}" class="checkbox checkbox-xl" checked>`;
         const statusBadge = `<span id="status${index}" class="badge badge-success badge-lg w-24 text-center m-1">reversed</span>`;
         let pathIdBadge = '';
         let pathClassBadge = '';
         // Get duration and delay from path
         let durationValue = path.duration || '';
         let delayValue = path.delay || '';
-        const animationDurationInput = `<div class="tooltip" data-tip="duration"><input type="text" value="${durationValue}" placeholder="2" class="input-duration input input-bordered input-accent input-sm md:input-xs w-20 text-center" /></div>`;
-        const animationDelayInput = `<div class="tooltip" data-tip="delay"><input type="text" value="${delayValue}" placeholder="0" class="input-delay input input-bordered input-accent input-sm md:input-xs w-20 text-center" /></div>`;
+        const animationDurationInput = `<div class="tooltip" data-tip="duration"><input type="text" value="${durationValue}" placeholder="2" class="input-duration input input-accent input-sm w-20 text-center" /></div>`;
+        const animationDelayInput = `<div class="tooltip" data-tip="delay"><input type="text" value="${delayValue}" placeholder="0" class="input-delay input input-accent input-sm w-20 text-center" /></div>`;
 
         // id badge
         if (path.id) {
@@ -156,11 +194,11 @@ $('#parse-btn').on('click', function () {
             }).join('');
         }
 
-        const easingFunctionSelect = `<div class="tooltip" data-tip="easing function"><select class="select-easing-function select select-accent select-sm md:select-xs">
+        const easingFunctionSelect = `<div class="tooltip" data-tip="easing function"><select class="select-easing-function select select-accent select-sm">
         ${createEasingFunctionOptions(easingFunction)}
         </select></div>`;
 
-        const easingTypeSelect = `<div class="tooltip" data-tip="easing type"><select class="select-easing-type select select-accent select-sm md:select-xs">
+        const easingTypeSelect = `<div class="tooltip" data-tip="easing type"><select class="select-easing-type select select-accent select-sm">
         ${createEasingTypeOptions(easingType)}
         </select></div>`;
 

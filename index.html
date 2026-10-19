@@ -44,80 +44,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 
-    <!-- DaisyUI and Tailwind CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css"/>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Custom Styles -->
-    <link rel="stylesheet" href="/static/css/styles.css">
-    <style>
-        /* Apply Outfit font to the entire application */
-        body {
-            font-family: "Outfit", sans-serif;
-            font-optical-sizing: auto;
-        }
-        
-        @media (max-width: 768px) {
-            /* Larger buttons on mobile */
-            .btn {
-                font-size: 1.125rem !important;
-                padding: 0.75rem 1.5rem !important;
-                min-height: 3.5rem !important;
-            }
-            
-            /* Larger text and better spacing */
-            body {
-                font-size: 1.125rem;
-            }
-            
-            /* Bigger headings */
-            h1 {
-                font-size: 2.5rem !important;
-            }
-            
-            h2 {
-                font-size: 1.75rem !important;
-            }
-            
-            /* Larger badge */
-            .badge-lg {
-                font-size: 1rem !important;
-                padding: 0.5rem 1rem !important;
-                min-height: 2rem !important;
-            }
-            
-            /* Better touch targets for file input */
-            #file-input {
-                min-height: 3.5rem;
-            }
-            
-            /* More padding for containers */
-            .container-outline {
-                padding: 1rem;
-            }
-            
-            /* Larger path toggle items */
-            #path-list .form-control {
-                padding: 0.75rem;
-            }
-            
-            #path-list label {
-                font-size: 1.125rem;
-                padding: 0.5rem;
-            }
-            
-            /* Larger SVG preview minimum height */
-            #svg-preview {
-                min-height: 16rem !important;
-            }
-            
-            /* Ensure icons scale with buttons */
-            .btn svg {
-                width: 1.5rem;
-                height: 1.5rem;
-            }
-        }
-    </style>
-    
     <!-- Umami Analytics, loaded only when both build-time variables are set -->
     <script type="module">
         const { VITE_UMAMI_SRC: src, VITE_UMAMI_WEBSITE_ID: websiteId } = import.meta.env;
@@ -189,7 +115,7 @@
                 <button id="animate-edited" class="btn btn-accent rounded-full px-6 w-full sm:w-auto">Edited</button>
             </div>
             <!-- subheading smaller as animation heading -->
-            <div class="tooltip tooltip-bottom flex-grow" data-tip="Adjust animation time scale">
+            <div class="tooltip tooltip-bottom grow" data-tip="Adjust animation time scale">
                 <div class="flex flex-row items-center gap-3 mb-auto">
                     <input id="speed-slider" type="range" min="10" max="200" value="100" step="10"
                            class="range range-accent"/>
@@ -202,7 +128,7 @@
             <h2 class="text-2xl font-semibold mb-3">SVG Preview</h2>
             <!-- SVG Preview -->
             <div id="svg-preview"
-                 class="flex min-w-fit container-outline p-2 h-full min-h-48 justify-center items-center">
+                 class="flex min-w-fit container-outline p-2 min-h-48 justify-center items-center">
                 <!-- SVG is going to be rendered here -->
             </div>
         </div>
@@ -238,16 +164,7 @@
     </div>
 </div>
 
-<!-- GSAP for animations -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js"></script>
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Ace Editor -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.44.0/ace.js"></script>
-<!-- SweetAlert2 -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Custom Scripts -->
 <script type="module" src="/src/main.js"></script>
-<script src="/static/js/anim.mjs"></script>
 </body>
 </html>
