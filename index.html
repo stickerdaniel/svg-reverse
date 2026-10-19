@@ -15,7 +15,7 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="SVG Path Reverser">
     <meta property="og:description" content="Reverse and Animate SVG paths with a single click">
-    <meta property="og:image" content="{{ url_for('static', filename='og.webp') }}">
+    <meta property="og:image" content="/static/og.webp">
     
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
@@ -23,20 +23,20 @@
     <meta property="twitter:url" content="https://svg-reverse.daniel.sticker.name">
     <meta name="twitter:title" content="SVG Path Reverser">
     <meta name="twitter:description" content="Reverse and Animate SVG paths with a single click">
-    <meta name="twitter:image" content="{{ url_for('static', filename='og.webp') }}">
+    <meta name="twitter:image" content="/static/og.webp">
 
     <!-- Favicon Tags -->
     <link rel="apple-touch-icon" sizes="180x180"
-          href="{{ url_for('static', filename='favicon/apple-touch-icon.png') }}">
+          href="/static/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32"
-          href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}">
+          href="/static/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16"
-          href="{{ url_for('static', filename='favicon/favicon-16x16.png') }}">
-    <link rel="manifest" href="{{ url_for('static', filename='favicon/site.webmanifest') }}">
-    <link rel="mask-icon" href="{{ url_for('static', filename='favicon/safari-pinned-tab.svg') }}" color="#65c3c7">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon/favicon.ico') }}">
+          href="/static/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/static/favicon/site.webmanifest">
+    <link rel="mask-icon" href="/static/favicon/safari-pinned-tab.svg" color="#65c3c7">
+    <link rel="shortcut icon" href="/static/favicon/favicon.ico">
     <meta name="msapplication-TileColor" content="#ffc40d">
-    <meta name="msapplication-config" content="{{ url_for('static', filename='favicon/browserconfig.xml') }}">
+    <meta name="msapplication-config" content="/static/favicon/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
 
     <!-- Google Fonts -->
@@ -48,7 +48,7 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="/static/css/styles.css">
     <style>
         /* Apply Outfit font to the entire application */
         body {
@@ -118,10 +118,15 @@
         }
     </style>
     
-    <!-- Umami Analytics -->
-    {% if config.get('PUBLIC_UMAMI_SRC') and config.get('PUBLIC_UMAMI_WEBSITE_ID') %}
-    <script defer src="{{ config.get('PUBLIC_UMAMI_SRC', 'https://insights.inframs.de/script.js') }}" data-website-id="{{ config.get('PUBLIC_UMAMI_WEBSITE_ID', 'your-website-id') }}"></script>
-    {% endif %}
+    <!-- Umami Analytics, loaded only when both build-time variables are set -->
+    <script type="module">
+        const { VITE_UMAMI_SRC: src, VITE_UMAMI_WEBSITE_ID: websiteId } = import.meta.env;
+        if (src && websiteId) {
+            const script = Object.assign(document.createElement('script'), { src, defer: true });
+            script.dataset.websiteId = websiteId;
+            document.head.append(script);
+        }
+    </script>
 </head>
 <body class="bg-base-200" data-theme="dim">
 
@@ -233,11 +238,6 @@
     </div>
 </div>
 
-<!-- Include defaultSvg variable -->
-<script>
-    var defaultSvg = decodeURIComponent("{{ default_svg | urlencode }}");
-</script>
-
 <!-- GSAP for animations -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js"></script>
 <!-- jQuery -->
@@ -247,7 +247,7 @@
 <!-- SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Custom Scripts -->
-<script src="{{ url_for('static', filename='js/main.js') }}"></script>
-<script src="{{ url_for('static', filename='js/anim.mjs') }}"></script>
+<script type="module" src="/src/main.js"></script>
+<script src="/static/js/anim.mjs"></script>
 </body>
 </html>

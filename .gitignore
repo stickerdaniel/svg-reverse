@@ -6,19 +6,10 @@
 # Ignore macOS system files
 .DS_Store
 
-# Ignore .vercel folder
-.vercel/
-
-# pycache
-__pycache__/
-
-# venv
-.venv/
-
 # Node modules
 node_modules/
 
-# MyPy cache
-.mypy_cache/
+# Build output
+dist/
 
 *.local*
