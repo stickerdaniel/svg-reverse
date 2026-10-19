@@ -59,6 +59,25 @@ describe('reverseD', () => {
         expectReversed(reverseD(d), explicit);
     });
 
+    test('reverses thousands of repeated closed subpaths without losing traversal or joins', () => {
+        const count = 4000;
+        const triangle = 'l5 0l0 5z';
+        const d = 'M10 10' + triangle.repeat(count);
+        const reversed = reverseD(d);
+        expectReversed(reversed, ('M10 10' + triangle).repeat(count));
+        expect(reversed.match(/Z/g)).toHaveLength(count);
+        expect(startPoint(d)).toBe('(10.000000, 10.000000)');
+    });
+
+    test('carries relative moves and resets smooth control points across closes', () => {
+        const d = 'm10 10 l5 0l0 5z m-3 4 l2 0z s3 4 5 6z m-1 -2 t5 6z M30 40l2 3z m1 2 4 5z t3 2';
+        const explicit = 'M10 10 L15 10L15 15Z M7 14 L9 14Z M7 14 C7 14 10 18 12 20Z M6 12 Q6 12 11 18Z M30 40L32 43Z M31 42L35 47Z M31 42Q31 42 34 44';
+        const reversed = reverseD(d);
+        expectReversed(reversed, explicit);
+        expect(reversed.match(/Z/g)).toHaveLength(6);
+        expect(startPoint('M10 10z m-3 4 l2 0z')).toBe('(7.000000, 14.000000)');
+    });
+
     test.each([
         ['after C with a 0 control coordinate', 'M10 10 C20 0 0 20 10 30 S30 40 40 30', 'M10 10 C20 0 0 20 10 30 C20 40 30 40 40 30'],
         ['after Q', 'M10 10 Q20 0 30 10 S40 30 50 10', 'M10 10 Q20 0 30 10 C30 10 40 30 50 10'],

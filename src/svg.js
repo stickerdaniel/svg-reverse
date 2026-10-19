@@ -10,15 +10,17 @@ const SVG_PLACEHOLDER = '<!-- SVG_PLACEHOLDER -->';
 const SCALE_STATEMENT = 'const animationScale = 1;';
 const TIMING_PREFIXES = { duration: 'duration-', delay: 'delay-', easing: 'ease-' };
 
-// Inserts an explicit moveto after every closepath that is followed by another
-// command, which svg-path-commander's parser rejects although SVG allows it.
-// The inserted absolute M goes to the closed subpath's start, so geometry is kept.
-function moveAfterClose(d) {
-    return d.split(/(?<=[Zz])/).reduce((out, chunk) => {
-        if (!out || /^[\s,]*(?:[Mm]|$)/.test(chunk)) return out + chunk;
-        const [, x, y] = normalize(out).findLast(([command]) => command === 'M');
-        return `${out} M${x} ${y}${chunk}`;
-    }, '');
+// Normalizes close-delimited chunks once, carrying the subpath start into the
+// next chunk. The leading M lets the parser accept commands after Z and keeps
+// relative m relative to that start; it is discarded if the chunk has its own M.
+function segmentsOf(d) {
+    let x = 0, y = 0;
+    return d.split(/(?<=[Zz])/).flatMap((chunk, index) => {
+        const segments = normalize(index === 0 ? chunk : `M${x} ${y}${chunk}`);
+        const start = segments.findLast(([command]) => command === 'M');
+        if (start) [, x, y] = start;
+        return index > 0 && /^[\s,]*(?:[Mm]|$)/.test(chunk) ? segments.slice(1) : segments;
+    });
 }
 
 // Converts path data to absolute M, L, C, Q, A and Z segments. S and T are expanded
@@ -47,9 +49,6 @@ function normalize(d) {
         return segment;
     });
 }
-
-// Parses path data into normalized segments; throws on invalid path data.
-const segmentsOf = d => normalize(moveAfterClose(d));
 
 const isDrawing = ([command]) => command !== 'M' && command !== 'Z';
 
