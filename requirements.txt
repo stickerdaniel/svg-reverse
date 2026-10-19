@@ -1,5 +1,0 @@
-Flask
-svgpathtools
-lxml
-gunicorn
-requests
