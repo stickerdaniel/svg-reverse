@@ -5,13 +5,24 @@ import 'ace-builds/src-noconflict/theme-dracula';
 import 'ace-builds/src-noconflict/ext-searchbox';
 import 'ace-builds/src-noconflict/ext-prompt';
 import 'ace-builds/src-noconflict/ext-settings_menu';
-import xmlWorkerUrl from 'ace-builds/src-min-noconflict/worker-xml.js?url';
 import { gsap } from 'gsap';
 import Swal from 'sweetalert2/dist/sweetalert2.esm.js';
 import './styles.css';
 import { buildZip, extractPaths, reversePaths } from './svg.js';
 
-ace.config.setModuleUrl('ace/mode/xml_worker', xmlWorkerUrl);
+// Settings loads themes, modes and keybindings on demand. Keep those choices
+// and their workers available locally instead of relying on Ace's former CDN.
+const aceAssets = import.meta.glob('../node_modules/ace-builds/src-min-noconflict/{theme,mode,keybinding,worker}-*.js', {
+    eager: true,
+    query: '?url&no-inline',
+    import: 'default',
+});
+for (const [file, url] of Object.entries(aceAssets)) {
+    const [, type, name] = file.match(/\/(theme|mode|keybinding|worker)-(.+)\.js$/);
+    const module = type === 'worker' ? `ace/mode/${name}_worker`
+        : `ace/${type === 'keybinding' ? 'keyboard' : type}/${name}`;
+    ace.config.setModuleUrl(module, url);
+}
 
 // Keep the standalone animation script identical to the copy in downloads.
 // Only animation controls wait for it; editing still works if loading fails.
