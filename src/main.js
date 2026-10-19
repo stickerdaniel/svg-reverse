@@ -1,4 +1,26 @@
+import $ from 'jquery';
+import ace from 'ace-builds';
+import 'ace-builds/src-noconflict/mode-svg';
+import 'ace-builds/src-noconflict/theme-dracula';
+import 'ace-builds/src-noconflict/ext-searchbox';
+import xmlWorkerUrl from 'ace-builds/src-min-noconflict/worker-xml.js?url';
+import { gsap } from 'gsap';
+import Swal from 'sweetalert2';
+import './styles.css';
 import { buildZip, extractPaths, reversePaths } from './svg.js';
+
+ace.config.setModuleUrl('ace/mode/xml_worker', xmlWorkerUrl);
+
+// Keep the standalone animation script identical to the copy in downloads.
+// Load it as a classic script after GSAP, before enabling the animation buttons.
+window.gsap = gsap;
+await new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = '/static/js/anim.mjs';
+    script.onload = resolve;
+    script.onerror = () => reject(new Error('Could not load the animation script'));
+    document.head.append(script);
+});
 
 // Default SVG for the input editor, empty if it cannot be loaded
 const defaultSvg = await fetch('/static/svg/hello.svg')
@@ -7,7 +29,7 @@ const defaultSvg = await fetch('/static/svg/hello.svg')
 
 // Initialize Ace Editor for the input
 let editor = ace.edit("input-editor");
-editor.setTheme("ace/theme/dracula"); // Light theme
+editor.setTheme("ace/theme/dracula");
 editor.session.setMode("ace/mode/svg");
 editor.setValue(defaultSvg, -1); // Set initial content
 editor.renderer.setShowPrintMargin(false); // Remove the gray line
@@ -92,15 +114,15 @@ $('#parse-btn').on('click', function () {
     showResultUI(true);
 
     data.forEach(function (path, index) {
-        const checkbox = `<input type="checkbox" id="path${index}" value="${index}" class="checkbox checkbox-lg" checked>`;
+        const checkbox = `<input type="checkbox" id="path${index}" value="${index}" class="checkbox checkbox-xl" checked>`;
         const statusBadge = `<span id="status${index}" class="badge badge-success badge-lg w-24 text-center m-1">reversed</span>`;
         let pathIdBadge = '';
         let pathClassBadge = '';
         // Get duration and delay from path
         let durationValue = path.duration || '';
         let delayValue = path.delay || '';
-        const animationDurationInput = `<div class="tooltip" data-tip="duration"><input type="text" value="${durationValue}" placeholder="2" class="input-duration input input-bordered input-accent input-sm md:input-xs w-20 text-center" /></div>`;
-        const animationDelayInput = `<div class="tooltip" data-tip="delay"><input type="text" value="${delayValue}" placeholder="0" class="input-delay input input-bordered input-accent input-sm md:input-xs w-20 text-center" /></div>`;
+        const animationDurationInput = `<div class="tooltip" data-tip="duration"><input type="text" value="${durationValue}" placeholder="2" class="input-duration input input-accent input-sm w-20 text-center" /></div>`;
+        const animationDelayInput = `<div class="tooltip" data-tip="delay"><input type="text" value="${delayValue}" placeholder="0" class="input-delay input input-accent input-sm w-20 text-center" /></div>`;
 
         // id badge
         if (path.id) {
@@ -156,11 +178,11 @@ $('#parse-btn').on('click', function () {
             }).join('');
         }
 
-        const easingFunctionSelect = `<div class="tooltip" data-tip="easing function"><select class="select-easing-function select select-accent select-sm md:select-xs">
+        const easingFunctionSelect = `<div class="tooltip" data-tip="easing function"><select class="select-easing-function select select-accent select-sm">
         ${createEasingFunctionOptions(easingFunction)}
         </select></div>`;
 
-        const easingTypeSelect = `<div class="tooltip" data-tip="easing type"><select class="select-easing-type select select-accent select-sm md:select-xs">
+        const easingTypeSelect = `<div class="tooltip" data-tip="easing type"><select class="select-easing-type select select-accent select-sm">
         ${createEasingTypeOptions(easingType)}
         </select></div>`;
 

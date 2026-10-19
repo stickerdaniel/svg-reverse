@@ -1,0 +1,257 @@
+@import "tailwindcss" source(none);
+@source "../index.html";
+@source "./main.js";
+
+@plugin "daisyui" {
+    themes: dim --default;
+}
+
+/* Keep the original dim palette; v5 rounds these colors and changes the selector radius. */
+:root, [data-theme="dim"] {
+    --color-base-100: oklch(30.8577% 0.023243 264.149498);
+    --color-base-200: oklch(28.0368% 0.01983 264.182074);
+    --color-base-300: oklch(26.3469% 0.018403 262.177739);
+    --color-base-content: oklch(82.9011% 0.031335 222.959324);
+    --color-primary: oklch(86.1335% 0.141656 139.549991);
+    --color-primary-content: oklch(17.2267% 0.028331 139.549991);
+    --color-secondary: oklch(73.3759% 0.165904 35.353059);
+    --color-secondary-content: oklch(14.6752% 0.033181 35.353059);
+    --color-accent: oklch(74.2296% 0.133641 311.37924);
+    --color-accent-content: oklch(14.8459% 0.026728 311.37924);
+    --color-neutral: oklch(24.7311% 0.020483 264.094728);
+    --color-neutral-content: oklch(82.9011% 0.031335 222.959324);
+    --color-info: oklch(86.0785% 0.142046 206.182959);
+    --color-info-content: oklch(17.2157% 0.028409 206.182959);
+    --color-success: oklch(86.1717% 0.142187 166.534048);
+    --color-success-content: oklch(17.2343% 0.028437 166.534048);
+    --radius-selector: 1.9rem;
+}
+
+/* Tailwind 3 used fixed line heights, even when mobile CSS enlarged the headings. */
+@theme {
+    --color-gray-500: #6b7280;
+    --text-2xl--line-height: 2rem;
+    --text-3xl--line-height: 2.25rem;
+    --text-4xl--line-height: 2.5rem;
+}
+
+/* Keep layout rules below utilities, as with the old Tailwind Play CDN. */
+@layer components {
+    body {
+        font-family: "Outfit", sans-serif;
+        font-optical-sizing: auto;
+        min-height: 100vh;
+    }
+
+    .svg-editor-container {
+        height: 300px;
+        width: 100%;
+        overflow: auto;
+        padding: 0;
+    }
+
+    .container-outline {
+        border: 1px solid var(--color-base-300);
+        border-radius: 0.5rem;
+    }
+
+    .svg-editor {
+        width: 100%;
+        height: 100%;
+    }
+
+    .path-item {
+        margin-bottom: 0.5rem;
+    }
+
+    .container {
+        margin: 0 auto;
+        padding: 1rem;
+    }
+
+    #svg-preview {
+        height: 230px;
+        overflow: auto;
+        resize: vertical;
+    }
+
+    #svg-preview svg {
+        width: 100%;
+        height: auto;
+        max-height: 100%;
+    }
+
+    @media (max-width: 768px) {
+        body {
+            font-size: 1.125rem;
+        }
+
+        h1 {
+            font-size: 2.5rem !important;
+        }
+
+        h2 {
+            font-size: 1.75rem !important;
+        }
+
+        #file-input {
+            min-height: 3.5rem;
+        }
+
+        .container-outline {
+            padding: 1rem;
+        }
+
+        #svg-preview {
+            min-height: 16rem !important;
+        }
+    }
+}
+
+/* Preserve the v4 control dimensions and appearance with the v5 components. */
+.btn {
+    height: 3rem;
+    min-height: 3rem;
+    gap: 0.5rem;
+    line-height: 1;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+
+@media (hover: hover) {
+    .btn:hover {
+        --btn-bg: color-mix(in oklab, var(--btn-color) 90%, black);
+        --btn-border: var(--btn-bg);
+    }
+}
+
+.badge-lg {
+    height: 1.5rem;
+    padding-inline: 0.688rem;
+    flex-shrink: 1;
+}
+
+.input-sm, .select-sm {
+    font-size: 0.875rem;
+    line-height: 2rem;
+    box-shadow: none;
+}
+
+.input {
+    display: inline-block;
+}
+
+.input::placeholder {
+    color: #9ca3af;
+    opacity: 1;
+}
+
+.select {
+    appearance: none;
+    width: auto;
+    padding-inline-end: 2rem;
+}
+
+.select::picker(select) {
+    appearance: auto;
+}
+
+.checkbox {
+    border-radius: var(--radius-field);
+    padding: 0;
+    box-shadow: none;
+}
+
+.checkbox::before {
+    display: none;
+}
+
+.checkbox:checked {
+    --check-bg: var(--color-base-content);
+    --check-fg: var(--color-base-100);
+    background-color: var(--check-bg);
+    background-size: auto;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(-45deg, transparent 65%, var(--check-bg) 65.99%),
+        linear-gradient(45deg, transparent 75%, var(--check-bg) 75.99%),
+        linear-gradient(-45deg, var(--check-bg) 40%, transparent 40.99%),
+        linear-gradient(45deg, var(--check-bg) 30%, var(--check-fg) 30.99%, var(--check-fg) 40%, transparent 40.99%),
+        linear-gradient(-45deg, var(--check-fg) 50%, var(--check-bg) 50.99%);
+}
+
+.tooltip {
+    --tt-off: calc(100% + 4px);
+    --tt-tail: calc(100% - 2px);
+}
+
+.tooltip[data-tip]::before {
+    border-radius: 0.25rem;
+    line-height: 1.25rem;
+    transform: translateX(-50%);
+}
+
+.tooltip::after {
+    width: 0;
+    height: 0;
+    mask-image: none;
+    background: none;
+    border: 3px solid transparent;
+    border-top-color: var(--tt-bg);
+    transform: translateX(-50%);
+}
+
+.tooltip-bottom::after {
+    border-top-color: transparent;
+    border-bottom-color: var(--tt-bg);
+}
+
+.range {
+    width: 100%;
+    border-radius: var(--radius-box);
+    --range-thumb: var(--color-base-100);
+    --range-bg: color-mix(in oklab, var(--color-base-content) 10%, transparent);
+}
+
+.range::-webkit-slider-runnable-track {
+    height: 0.5rem;
+}
+
+.range::-moz-range-track {
+    height: 0.5rem;
+}
+
+.range::-webkit-slider-thumb {
+    border: none;
+    box-shadow: 0 0 0 3px var(--range-progress) inset,
+        var(--focus-shadow, 0 0), -100.6rem 0 0 100rem;
+}
+
+.range::-moz-range-thumb {
+    border: none;
+    box-shadow: 0 0 0 3px var(--range-progress) inset,
+        var(--focus-shadow, 0 0), -100.5rem 0 0 100rem;
+    background-color: var(--range-thumb);
+}
+
+.range:focus-visible {
+    --focus-shadow: 0 0 0 6px var(--color-base-100) inset,
+        0 0 0 2rem var(--range-progress) inset;
+}
+
+@media (max-width: 768px) {
+    .btn {
+        font-size: 1.125rem;
+        padding: 0.75rem 1.5rem;
+        min-height: 3.5rem;
+    }
+
+    .badge-lg {
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+        min-height: 2rem;
+    }
+
+    .btn svg {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+}

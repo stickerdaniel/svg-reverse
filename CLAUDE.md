@@ -9,7 +9,7 @@ A static web app that reverses SVG path directions for stroke-dashoffset animati
 ## Core Architecture
 
 - **Build**: Vite with `index.html` at the root; files in `public/` are served and copied verbatim (asset URLs stay `/static/...`)
-- **Frontend**: `src/main.js` (jQuery, Ace, SweetAlert2 and GSAP from CDNs) with DaisyUI/Tailwind CSS from CDNs for styling
+- **Frontend**: `src/main.js` imports jQuery, Ace, SweetAlert2 and GSAP from npm; `src/styles.css` bundles Tailwind CSS and daisyUI with compatibility styles for the original layout. Downloaded animations still load GSAP from cdnjs.
 - **SVG Processing** (`src/svg.js`):
   - `extractPaths`: parses SVG with `DOMParser` and lists path information
   - `reversePaths`: reverses selected paths and applies animation classes
