@@ -10,7 +10,7 @@
     "test": "bun test"
   },
   "dependencies": {
-    "ace-builds": "1.45.0",
+    "ace-builds": "1.45.2",
     "fflate": "0.8.3",
     "gsap": "3.15.0",
     "jquery": "4.0.0",

@@ -5,7 +5,7 @@
     "": {
       "name": "svg-reverse",
       "dependencies": {
-        "ace-builds": "1.45.0",
+        "ace-builds": "1.45.2",
         "fflate": "0.8.3",
         "gsap": "3.15.0",
         "jquery": "4.0.0",
@@ -97,7 +97,7 @@
 
     "@thednp/dommatrix": ["@thednp/dommatrix@3.1.2", "", {}, "sha512-wxRH2/Qdqd+JxFpjb5vw+ZMaij8Hqa/9Hgl41n2Jb+3WNRhdemrosK0FxEo/yEvhvHGW8D1tZ3oPH9N0m1QG+A=="],
 
-    "ace-builds": ["ace-builds@1.45.0", "", {}, "sha512-tAAorvbQRlsdDeuf4RnBLgaRk4HVT9td2D4QKEqXyuQkZmFoqHxl9JuV2o1XkuDT+zOreooGPiG1tU/Y+pNFkg=="],
+    "ace-builds": ["ace-builds@1.45.2", "", {}, "sha512-a0IADaETGBnBW5CIkniUJn7F+NyTuHWKqlv1A8FXaMmFflJsMGnU3TzkiyslInqIZ3odfcVKOdXBGIKBefzFDA=="],
 
     "daisyui": ["daisyui@5.7.50", "", {}, "sha512-+/LRqnTCoc7s/bJEKKwtJSwzeXCVdAmRdNmZeZzgHCaQ9PJyl7j+2V2U32GQDMyD+VDkP9e/+JGoC72Y1hLk7w=="],
 
