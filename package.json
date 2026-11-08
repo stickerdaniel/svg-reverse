@@ -18,9 +18,9 @@
     "sweetalert2": "11.26.25"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "4.3.3",
+    "@tailwindcss/vite": "4.3.5",
     "daisyui": "5.7.50",
-    "tailwindcss": "4.3.3",
+    "tailwindcss": "4.3.5",
     "vite": "8.3.4"
   }
 }
