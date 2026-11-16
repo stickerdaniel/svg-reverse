@@ -14,7 +14,7 @@
     "fflate": "0.8.3",
     "gsap": "3.15.0",
     "jquery": "4.0.0",
-    "svg-path-commander": "2.3.3",
+    "svg-path-commander": "2.3.5",
     "sweetalert2": "11.26.25"
   },
   "devDependencies": {
